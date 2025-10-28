@@ -41,14 +41,14 @@ public class MoradorCasaDAO {
     }
 
     // Consultar
-    public MoradorCasa consultarMoradorCasa(MoradorCasa moradorCasa) throws SQLException {
+    /*public MoradorCasa consultarMoradorCasa(int casa_id) throws SQLException {
 
         String sql = "SELECT * FROM MORADOR_CASA WHERE casa_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, moradorCasa.getCasaId());
+            stmt.setInt(1, casa_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -67,10 +67,10 @@ public class MoradorCasaDAO {
                 return null;
             }
         }
-    }
+    }*/
 
     // Consultar Casas relacionada a um Morador
-    public Casa[] consultarCasasMorador(Morador morador) throws SQLException {
+    public List<Casa> consultarCasasPorMorador(int morador_id) throws SQLException {
 
         String sql =  "SELECT C.* " +
                 "FROM MORADOR_CASA B " +
@@ -80,7 +80,7 @@ public class MoradorCasaDAO {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, morador.getId());
+            stmt.setInt(1, morador_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -93,13 +93,13 @@ public class MoradorCasaDAO {
                     c.setEndereco(rs.getString("casa_ender"));
                     listaCasa.add(c);
                 }
-                return listaCasa.toArray(new Casa[0]);
+                return listaCasa;
             }
         }
     }
 
-    // Consultar Pessoas relacionada a uma Casa
-    public Pessoa[] consultarMoradoresCasa(Casa casa) throws SQLException {
+    // Consultar Moradores relacionada a uma Casa
+    public List<Pessoa> consultarMoradoresPorCasa(int casa_id) throws SQLException {
 
         //String sql =  "SELECT A.* " +
         //        "FROM PESSOAS A " +
@@ -115,7 +115,7 @@ public class MoradorCasaDAO {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, casa.getId());
+            stmt.setInt(1, casa_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -133,7 +133,7 @@ public class MoradorCasaDAO {
                     p.setDataNasc(d);
                     listaPessoas.add(p);
                 }
-                return listaPessoas.toArray(new Pessoa[0]);
+                return listaPessoas;
             }
         }
     }
@@ -156,14 +156,14 @@ public class MoradorCasaDAO {
     }
 
     // Deletar - Retorna boolean
-    public boolean deletarMoradorCasa(MoradorCasa moradorCasa) throws SQLException {
+    public boolean deletarMoradorCasa(int morador_id, int casa_id) throws SQLException {
         String sql = "DELETE FROM MORADOR_CASA WHERE morador_Id = ? and casa_id=? ";
         try (Connection conn = ConnectionFactory.getConnection();
 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, moradorCasa.getMoradorId());
-            stmt.setInt(2, moradorCasa.getCasaId());
+            stmt.setInt(1, morador_id);
+            stmt.setInt(2, casa_id);
 
             return stmt.executeUpdate() > 0;
         }

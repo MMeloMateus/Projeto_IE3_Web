@@ -4,16 +4,14 @@ public class Autorizacao {
     private int id;
     private int pesId;
     private int locId;
-    private int autorizacao;
 
-    public Autorizacao(int pesId, int locId, int autorizacao) {
+    public Autorizacao(int pesId, int locId) {
         this.pesId = pesId;
         this.locId = locId;
-        this.autorizacao = autorizacao;
     }
 
-    public Autorizacao(int id,int pesId, int locId, int autorizacao ){
-        this(pesId,locId,autorizacao);
+    public Autorizacao(int id,int pesId, int locId ){
+        this(pesId,locId);
         this.id = id;
     }
 
@@ -40,21 +38,12 @@ public class Autorizacao {
         this.locId = locId;
     }
 
-    public int getAutorizacao() {
-        return autorizacao;
-    }
-
-    public void setAutorizacao(int autorizacao) {
-        this.autorizacao = autorizacao;
-    }
-
     @Override
     public String toString() {
         return "Autorizacao{" +
                 "id=" + id +
                 ", pesId=" + pesId +
                 ", locId=" + locId +
-                ", autorizacao=" + autorizacao +
                 '}';
     }
 }

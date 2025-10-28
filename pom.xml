@@ -5,9 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>mortgage-calculator</artifactId>
+    <artifactId>ControleDeAcessoDeCondominio</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Mortgage Calculator</name>
+    <name>ControleAcesosCondomínio</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+    </dependencies>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

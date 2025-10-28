@@ -40,7 +40,7 @@ public class ServicoDAO {
     }
 
     // Consultar Geral
-    public Servico[] consultarServicos() throws SQLException {
+    public List<Servico> consultarServicosGeral() throws SQLException {
 
         String sql = "SELECT * FROM SERVICOS";
 
@@ -62,13 +62,13 @@ public class ServicoDAO {
                     s.setDataFim(rs.getDate("data_fim"));
                     listaServico.add(s);
                 }
-                return listaServico.toArray(new Servico[0]);
+                return listaServico;
             }
         }
     }
 
     // Consultar serviços relacionados a um morador(arrayList)
-    public Servico[] consultarServicosMorador(Morador morador) throws SQLException {
+    public List<Servico> consultarServicosPorMorador(int mor_id) throws SQLException {
 
         String sql = "SELECT A.* " +
                 "FROM SERVICOS A " +
@@ -79,7 +79,7 @@ public class ServicoDAO {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, morador.getId());
+            stmt.setInt(1, mor_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -96,13 +96,13 @@ public class ServicoDAO {
                     s.setDataFim(rs.getDate("data_fim"));
                     listaServico.add(s);
                 }
-                return listaServico.toArray(new Servico[0]);
+                return listaServico;
             }
         }
     }
 
     // Consultar serviços relacionados a um prestador(arrayList)
-    public Servico[] consultarServicosPrestador(Prestador prestador) throws SQLException {
+    public List<Servico> consultarServicosPorPrestador(int prest_id) throws SQLException {
 
         String sql = "SELECT A.* " +
                 "FROM SERVICOS A " +
@@ -113,7 +113,7 @@ public class ServicoDAO {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, prestador.getId());
+            stmt.setInt(1, prest_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -130,7 +130,7 @@ public class ServicoDAO {
                     s.setDataFim(rs.getDate("data_fim"));
                     listaServico.add(s);
                 }
-                return listaServico.toArray(new Servico[0]);
+                return listaServico;
             }
         }
     }
@@ -155,13 +155,13 @@ public class ServicoDAO {
     }
 
     // Deletar - Retorna boolean
-    public boolean deletarServico(Servico servico) throws SQLException {
+    public boolean deletarServico(int serv_id) throws SQLException {
         String sql = "DELETE FROM SERVICOS WHERE serv_id = ?";
         try (Connection conn = ConnectionFactory.getConnection();
 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, servico.getId());
+            stmt.setInt(1, serv_id);
 
             return stmt.executeUpdate() > 0;
         }

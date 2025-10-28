@@ -54,9 +54,9 @@ public class MoradorDAO extends PessoaDAO  {
     }
 
     // Deletar - Retorna boolean
-    public boolean deletarMorador(Morador morador) throws SQLException {
+    public boolean deletarMorador(int id) throws SQLException {
 
-        super.deletarPessoa(morador);
+        super.deletarPessoa(id);
         return true;
 
 //        String sql = "DELETE FROM MORADORES WHERE pessoa_id = ?";

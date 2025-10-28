@@ -2,7 +2,6 @@ package com.controleDeAcesso.dao;
 
 
 import com.controleDeAcesso.model.Casa;
-import com.controleDeAcesso.model.Pessoa;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -36,14 +35,14 @@ public class CasaDAO {
     }
 
     // Consultar
-    public Casa consultarCasa(Casa casa) throws SQLException {
+    public Casa consultarCasa(int casa_id) throws SQLException {
 
         String sql = "SELECT * FROM CASAS WHERE casa_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, casa.getId());
+            stmt.setInt(1, casa_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -60,20 +59,20 @@ public class CasaDAO {
     }
 
     // Deletar - Retorna boolean
-    public boolean deletarCasa(Casa casa) throws SQLException {
+    public boolean deletarCasa(int casa_id) throws SQLException {
         String sql = "DELETE FROM CASAS WHERE casa_id=? ";
         try (Connection conn = ConnectionFactory.getConnection();
 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, casa.getId());
+            stmt.setInt(1, casa_id);
 
             return stmt.executeUpdate() > 0;
         }
     }
 
     // Consultar casas no geral (arrayList)
-    public Casa[] consultarCasaGeral(Casa casa) throws SQLException {
+    public List<Casa> consultarCasasGeral() throws SQLException {
 
         String sql = "SELECT * FROM CASAS";
 
@@ -90,7 +89,7 @@ public class CasaDAO {
                     c.setEndereco(rs.getString("casa_ender"));
                     listaCasa.add(c);
                 }
-                return listaCasa.toArray(new Casa[0]);
+                return listaCasa;
             }
         }
     }

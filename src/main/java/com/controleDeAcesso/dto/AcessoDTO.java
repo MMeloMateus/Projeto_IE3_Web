@@ -1,5 +1,6 @@
 package com.controleDeAcesso.dto;
 
+import com.controleDeAcesso.model.Acesso;
 import com.controleDeAcesso.util.TipoAcesso;
 import com.controleDeAcesso.util.StatusAcesso;
 import java.sql.Timestamp;

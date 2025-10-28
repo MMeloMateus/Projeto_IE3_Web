@@ -36,14 +36,14 @@ public class PrestadorDAO extends PessoaDAO {
     }
 
     // Consultar
-    public Prestador consultarPrestador(Prestador prestador) throws SQLException {
+    public Prestador consultarPrestador(int prest_id) throws SQLException {
 
         String sql = "SELECT * FROM PRESTADORES WHERE prestador_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, prestador.getId());
+            stmt.setInt(1, prest_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -78,9 +78,9 @@ public class PrestadorDAO extends PessoaDAO {
     }
 
     // Deletar - Retorna boolean
-    public boolean deletarPrestador(Prestador prestador) throws SQLException {
+    public boolean deletarPrestador(int id) throws SQLException {
 
-        super.deletarPessoa(prestador);
+        super.deletarPessoa(id);
         return true;
 
 //        String sql = "DELETE FROM PRESTADORES WHERE prestador_id = ?";

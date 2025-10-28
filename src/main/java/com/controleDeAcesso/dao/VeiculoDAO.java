@@ -1,6 +1,8 @@
 package com.controleDeAcesso.dao;
 
 import com.controleDeAcesso.model.Veiculo;
+import com.controleDeAcesso.util.TipoPessoa;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +58,14 @@ public class VeiculoDAO {
     }
 
     // Consultar
-    public Veiculo consultarVeiculo(Veiculo veiculo) throws SQLException {
+    public Veiculo consultarVeiculo(String vei_placa) throws SQLException {
 
         String sql = "SELECT * FROM VEICULOS WHERE vei_placa = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, veiculo.getPlaca());
+            stmt.setString(1, vei_placa);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -82,7 +84,7 @@ public class VeiculoDAO {
     }
 
     // Consultar Veiculo Geral
-    public Veiculo[] consultarVeiculosGeral() throws SQLException {
+    public List<Veiculo> consultarVeiculosGeral() throws SQLException {
 
         String sql = "SELECT * FROM VEICULOS";
 
@@ -102,34 +104,37 @@ public class VeiculoDAO {
                     v.setModelo(rs.getString("vei_modelo"));
                     listaVeiculos.add(v);
                 }
-                return listaVeiculos.toArray(new Veiculo[0]);
+                return listaVeiculos;
             }
         }
     }
 
     // Consultar Veiculo por Tipo Responsavel
-    public Veiculo[] consultarVeiculosPorTipoPessoa(String tipo) throws SQLException {
+    public List<Veiculo> consultarVeiculosPorTipoPessoa(TipoPessoa tipoPessoa) throws SQLException {
 
         String sql;
 
         // Também já vai buscar a pessoa, podemos retirar caso necessário a busca da pessoa
-        if(tipo.equalsIgnoreCase("MORADOR")){
+        if(tipoPessoa.equals(TipoPessoa.MORADOR)){
             sql = "SELECT A.*, C.* \n" +
                     "FROM PESSOAS A\n" +
                     "INNER JOIN MORADOR B ON A.pessoa_id = B.pessoa_id\n" +
                     "INNER JOIN VEICULOS C ON A.pessoa_id = C.pessoa_id;";
-        } else if (tipo.equalsIgnoreCase("PRESTADOR")){
+        }
+        else if (tipoPessoa.equals(TipoPessoa.PRESTADOR)){
             sql = "SELECT A.*, C.* \n" +
                     "FROM PESSOAS A\n" +
                     "INNER JOIN PRESTADOR B ON A.pessoa_id = B.pessoa_id\n" +
                     "INNER JOIN VEICULOS C ON A.pessoa_id = C.pessoa_id;";
-        } else if(tipo.equalsIgnoreCase("VISITANTE")){
+        }
+        else if(tipoPessoa.equals(TipoPessoa.VISITANTE)){
             sql = "SELECT A.*, C.* \n" +
                     "FROM PESSOAS A\n" +
                     "INNER JOIN VISITANTE B ON A.pessoa_id = B.pessoa_id\n" +
                     "INNER JOIN VEICULOS C ON A.pessoa_id = C.pessoa_id;";
-        } else {
-            throw new IllegalArgumentException("Tipo de pessoa inválido: " + tipo);
+        }
+        else {
+            throw new IllegalArgumentException("Tipo de pessoa inválido: " + tipoPessoa);
         }
 
         Veiculo veiculo = new Veiculo() ;
@@ -152,19 +157,19 @@ public class VeiculoDAO {
                     v.setModelo(rs.getString("vei_modelo"));
                     listaVeiculos.add(v);
                 }
-                return listaVeiculos.toArray(new Veiculo[0]);
+                return listaVeiculos;
             }
         }
     }
 
     // Deletar
-    public boolean deletarVeiculo(Veiculo veiculo) throws SQLException {
+    public boolean deletarVeiculo(String vei_placa) throws SQLException {
         String sql = "DELETE FROM VEICULOS WHERE vei_placa = ?";
         try (Connection conn = ConnectionFactory.getConnection();
 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, veiculo.getPlaca());
+            stmt.setString(1, vei_placa);
 
             return stmt.executeUpdate() > 0;
         }

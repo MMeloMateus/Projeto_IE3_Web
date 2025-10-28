@@ -11,7 +11,7 @@ import java.util.List;
 public class VisitanteDAO extends PessoaDAO  {
 
     // Gravar
-    public int incluirVisitante(Visitante visitante, Morador morador) throws SQLException {
+    public int incluirVisitante(Visitante visitante) throws SQLException {
 
         int visitante_id = super.incluirPessoa(visitante);
 
@@ -22,7 +22,7 @@ public class VisitanteDAO extends PessoaDAO  {
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, visitante_id);
-            stmt.setInt(2, morador.getId());
+            stmt.setInt(2, visitante.getMorCadastraId());
             stmt.setDate(3, Date.valueOf(LocalDate.now()));
 
             // Linha afetada pela ação
@@ -41,14 +41,14 @@ public class VisitanteDAO extends PessoaDAO  {
     }
 
     // Consultar com base no Visitante
-    public Visitante consultarVisitante(Visitante visitante) throws SQLException {
+    public Visitante consultarVisitante(int vis_id) throws SQLException {
 
         String sql = "SELECT * FROM VISITANTES WHERE visitante_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, visitante.getId());
+            stmt.setInt(1, vis_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -64,14 +64,14 @@ public class VisitanteDAO extends PessoaDAO  {
     }
 
     // Consultar com base no morador vinculado
-    public Visitante[] consultarVisitantesPorMorador(Morador morador) throws SQLException {
+    public List<Visitante> consultarVisitantesPorMorador(int mor_id) throws SQLException {
 
         String sql = "SELECT * FROM VISITANTES WHERE morador_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, morador.getId());
+            stmt.setInt(1, mor_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -85,7 +85,7 @@ public class VisitanteDAO extends PessoaDAO  {
                     v.setDataAutorizacao(d);
                     listaVisitantesPMorador.add(v);
                 }
-                return listaVisitantesPMorador.toArray(new Visitante[0]);
+                return listaVisitantesPMorador;
             }
         }
     }
@@ -115,7 +115,7 @@ public class VisitanteDAO extends PessoaDAO  {
 
 
     // Atualizar
-    public boolean atualizarVisitante(Visitante visitante, Morador morador) throws SQLException {
+    public boolean atualizarVisitante(Visitante visitante) throws SQLException {
 
         super.atualizarPessoa(visitante);
 
@@ -124,7 +124,7 @@ public class VisitanteDAO extends PessoaDAO  {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, morador.getId());
+            stmt.setInt(1, visitante.getMorCadastraId());
             stmt.setInt(2, visitante.getId());
 
             return stmt.executeUpdate() > 0;
@@ -132,9 +132,9 @@ public class VisitanteDAO extends PessoaDAO  {
     }
 
     // Deletar - Retorna boolean
-    public boolean deletarVisitante(Visitante visitante) throws SQLException {
+    public boolean deletarVisitante(int id) throws SQLException {
 
-        super.deletarPessoa(visitante);
+        super.deletarPessoa(id);
         return true;
 //        String sql = "DELETE FROM VISITANTES WHERE visitante_id = ?";
 //        try (Connection conn = ConnectionFactory.getConnection();

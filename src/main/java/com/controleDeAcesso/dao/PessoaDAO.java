@@ -2,6 +2,8 @@ package com.controleDeAcesso.dao;
 
 
 import com.controleDeAcesso.model.Pessoa;
+import com.controleDeAcesso.util.TipoPessoa;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class PessoaDAO {
             //    }
     //}
 
-    public int incluirPessoa(Pessoa pessoa) throws SQLException {
+    protected int incluirPessoa(Pessoa pessoa) throws SQLException {
         String sql = "INSERT INTO PESSOAS (pessoa_nome, pessoa_cpf, pessoa_email, pessoa_telef, pessoa_data_nasc, pessoa_ativa) VALUES (?,?,?,?,?,?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -49,7 +51,7 @@ public class PessoaDAO {
             stmt.setString(4, pessoa.getTelefone());
             stmt.setDate(5, new java.sql.Date(pessoa.getDataNasc().getTime()));
             // garante que não será inserido NULL (evita erro quando coluna não tem DEFAULT)
-            stmt.setBoolean(6, pessoa.isAtiva());
+            stmt.setBoolean(6, true);
 
             int affectedRows = stmt.executeUpdate();
 
@@ -71,7 +73,7 @@ public class PessoaDAO {
     }
 
     // Consultar Geral - Retorna um arrayList
-    public Pessoa[] consultarPessoasGeral( ) throws SQLException {
+    public List<Pessoa> consultarPessoasGeral( ) throws SQLException {
 
         String sql = "SELECT *  FROM PESSOAS";
 
@@ -93,7 +95,7 @@ public class PessoaDAO {
                     p.setDataNasc(d);
                     listaPessoas.add(p);
                 }
-                return listaPessoas.toArray(new Pessoa[0]);
+                return listaPessoas;
             }
         }
     }
@@ -156,19 +158,24 @@ public class PessoaDAO {
         }
     }
 
-    public Pessoa[] consultarPessoasPorTipo(String tipo){
-
-        String sql;
-
-        if(tipo.equalsIgnoreCase("MORADOR")){
-            sql = "SELECT A.* FROM PESSOAS A INNER JOIN MORADORES B ON A.pessoa_id = B.morador_id";
-        } else if (tipo.equalsIgnoreCase("PRESTADOR")){
-            sql = "SELECT A.* FROM PESSOAS A INNER JOIN PRESTADORES B ON A.pessoa_id = B.prestador_id";
-        } else if(tipo.equalsIgnoreCase("VISITANTE")){
-            sql = "SELECT A.* FROM PESSOAS A INNER JOIN VISITANTES B ON A.pessoa_id = B.visitante_id";
-        } else {
-            throw new IllegalArgumentException("Tipo de pessoa inválido: " + tipo);
+    private String comandoConsultarPessoasPorTipo(TipoPessoa tipoPessoa){
+        if(tipoPessoa.equals(TipoPessoa.MORADOR)){
+            return "SELECT A.* FROM PESSOAS A INNER JOIN MORADORES B ON A.pessoa_id = B.morador_id";
         }
+        else if (tipoPessoa.equals(TipoPessoa.PRESTADOR)){
+            return  "SELECT A.* FROM PESSOAS A INNER JOIN PRESTADORES B ON A.pessoa_id = B.prestador_id";
+        }
+        else if(tipoPessoa.equals(TipoPessoa.VISITANTE)){
+            return  "SELECT A.* FROM PESSOAS A INNER JOIN VISITANTES B ON A.pessoa_id = B.visitante_id";
+        }
+        else {
+            throw new IllegalArgumentException("Tipo de pessoa inválido: " + tipoPessoa);
+        }
+    }
+
+    public List<Pessoa> consultarPessoasPorTipo(TipoPessoa tipoPessoa) throws SQLException{
+
+        String sql = comandoConsultarPessoasPorTipo(tipoPessoa);
 
         try (Connection conn = ConnectionFactory.getConnection();
 
@@ -189,15 +196,13 @@ public class PessoaDAO {
                     p.setDataNasc(d);
                     listaPessoas.add(p);
                 }
-                return listaPessoas.toArray(new Pessoa[0]);
+                return listaPessoas;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
     // Atualizar - Retorna boolean
-    public boolean atualizarPessoa(Pessoa pessoa) throws SQLException {
+    protected boolean atualizarPessoa(Pessoa pessoa) throws SQLException {
 
         String sql = "UPDATE PESSOAS SET pessoa_nome=?, pessoa_cpf=?, pessoa_email=?, pessoa_telef=?, pessoa_data_nasc=? WHERE pessoa_id=?";
 
@@ -216,15 +221,15 @@ public class PessoaDAO {
     }
 
     // Deletar - Retorna boolean
-    public boolean deletarPessoa(Pessoa pessoa) throws SQLException {
+    protected boolean deletarPessoa(int id) throws SQLException {
 
         String sql = "UPDATE PESSOAS SET pessoa_ativa = ? WHERE pessoa_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setBoolean(1, false);
-            stmt.setInt(2, pessoa.getId());
+            stmt.setInt(2, id);
             return stmt.executeUpdate() > 0;
         }
 
@@ -237,14 +242,14 @@ public class PessoaDAO {
 //        }
     }
 
-    public boolean reincluirPessoa(Pessoa pessoa) throws SQLException{
+    public boolean reincluirPessoa(int pessoa_id) throws SQLException{
         String sql = "UPDATE PESSOAS SET pessoa_ativa = ? WHERE pessoa_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setBoolean(1, true);
-            stmt.setInt(2, pessoa.getId());
+            stmt.setInt(2, pessoa_id);
             return stmt.executeUpdate() > 0;
         }
     }

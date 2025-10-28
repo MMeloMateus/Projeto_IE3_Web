@@ -5,7 +5,7 @@ import com.controleDeAcesso.util.TipoAcesso;
 
 import com.controleDeAcesso.model.Acesso;
 import com.controleDeAcesso.model.LocalControlado;
-import com.controleDeAcesso.model.Pessoa;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +43,14 @@ public class AcessoDAO {
     }
 
     // Consultar
-    public Acesso consultarAcesso(Acesso acesso) throws SQLException {
+    public Acesso consultarAcesso(int id) throws SQLException {
 
         String sql = "SELECT * FROM ACESSOS WHERE acesso_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, acesso.getId());
+            stmt.setInt(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -71,14 +71,14 @@ public class AcessoDAO {
     }
 
     // Consultar relacionados a Local
-    public Acesso[] consultarAcessosPorLocal(LocalControlado local) throws SQLException {
+    public List<Acesso> consultarAcessosPorLocal(int local_id) throws SQLException {
 
         String sql = "SELECT * FROM ACESSOS WHERE local_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, local.getId());
+            stmt.setInt(1, local_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
@@ -95,13 +95,13 @@ public class AcessoDAO {
                     a.setStatusAcesso(StatusAcesso.valueOf(rs.getString("acesso_status")));
                     listaAcessos.add(a);
                 }
-                return listaAcessos.toArray(new Acesso[0]);
+                return listaAcessos;
             }
         }
     }
 
     // Consultar relacionados a Pessoas
-    public Acesso[] consultarAcessosPorPessoa(int pessoa_id) throws SQLException {
+    public List<Acesso> consultarAcessosPorPessoa(int pessoa_id) throws SQLException {
 
         String sql = "SELECT * FROM ACESSOS WHERE pessoa_id = ?";
 
@@ -125,14 +125,14 @@ public class AcessoDAO {
                     a.setStatusAcesso(StatusAcesso.valueOf(rs.getString("acesso_status")));
                     listaAcessos.add(a);
                 }
-                return listaAcessos.toArray(new Acesso[0]);
+                return listaAcessos;
             }
         }
     }
 
     // Consultar relacionados a Pessoas
     // Necessidade de Melhora no Try
-    public Acesso[] consultarAcessosOrderData( ) throws SQLException {
+    public List<Acesso> consultarAcessosOrderData( ) throws SQLException {
 
         String sql = "SELECT * FROM ACESSOS ORDER BY acesso_data ASC";
 
@@ -154,7 +154,7 @@ public class AcessoDAO {
                     a.setStatusAcesso(StatusAcesso.valueOf(rs.getString("acesso_status")));
                     listaAcessos.add(a);
                 }
-                return listaAcessos.toArray(new Acesso[0]);
+                return listaAcessos;
             }
         }
     }
