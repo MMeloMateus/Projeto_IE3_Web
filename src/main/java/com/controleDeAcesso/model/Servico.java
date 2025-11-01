@@ -1,7 +1,13 @@
 package com.controleDeAcesso.model;
 
-import java.util.Date;
 
+
+
+import java.util.Date;
+/*
+@Entity
+@Table(name = "SERVICOS")
+*/
 public class Servico {
     private int id;
     private int morId;

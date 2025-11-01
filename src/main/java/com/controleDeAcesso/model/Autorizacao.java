@@ -1,6 +1,12 @@
 package com.controleDeAcesso.model;
 
+
+/*
+@Entity
+@Table(name = "AUTORIZACOES")
+*/
 public class Autorizacao {
+
     private int id;
     private int pesId;
     private int locId;

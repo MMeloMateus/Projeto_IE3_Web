@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+  <head>
+	<meta charset="UTF-8">
+    <title>Login</title>
+	<style>
+	
+		body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+		
+		 h2 {
+            text-align: center;
+            color: #333;
+        }
+		
+		input{
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+		
+		.container {
+            width: 800px;
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+	
+		label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+		
+		button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+		
+		th  {
+            padding: 10px;
+            text-align: left;
+			border: 1px solid #ddd;
+			background-color: #007BFF;
+            color: white;
+        }
+
+	</style>
+
+  </head>
+
+  <body>
+  
+    <div class="container">
+		<form th:action="@{/clientes/salvar}" th:object="${cliente}" method="post">
+			<h2>Controle De Acesso a Condomínio</h2>
+			<label for="loginLabel">Login:</label>
+			<input type="text" id="loginText" th:field="*{login}" >
+			<br><br>
+			<label for="passwordLabel">Senha:</label>
+			<input type="password" >
+			<br><br>
+			<button type="submit" >Entrar</button>
+		</form>
+	</div>
+</body>
+
+</html>

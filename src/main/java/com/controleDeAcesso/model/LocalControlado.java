@@ -1,5 +1,11 @@
 package com.controleDeAcesso.model;
 
+
+
+/*
+@Entity
+@Table(name = "LOCAIS_CONTROLADOS")
+*/
 public class LocalControlado {
 
     private int id;

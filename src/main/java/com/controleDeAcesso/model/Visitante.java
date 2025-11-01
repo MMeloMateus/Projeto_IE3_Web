@@ -1,7 +1,12 @@
 package com.controleDeAcesso.model;
 
+
 import java.util.Date;
 
+/*
+@Entity
+@Table(name = "VISITANTES")
+*/
 public class Visitante extends Pessoa {
     private int morCadastraId;
     private Date dataAutorizacao;

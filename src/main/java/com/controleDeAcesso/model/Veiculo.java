@@ -1,5 +1,10 @@
 package com.controleDeAcesso.model;
 
+
+/*
+@Entity
+@Table(name = "VEICULOS")
+*/
 public class Veiculo {
     private String placa;
     private int pesId;

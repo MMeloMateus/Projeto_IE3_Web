@@ -1,7 +1,12 @@
 package com.controleDeAcesso.model;
 
-import java.util.Date;
 
+
+import java.util.Date;
+/*
+@Entity
+@Table(name = "PRESTADORES")
+*/
 public class Prestador extends Pessoa {
     private String cnpj;
     private String empresa;

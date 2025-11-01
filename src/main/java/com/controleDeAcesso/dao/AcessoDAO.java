@@ -140,7 +140,7 @@ public class AcessoDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             try (ResultSet rs = stmt.executeQuery()) {
-
+                System.out.println(rs);
                 List<Acesso> listaAcessos = new ArrayList<>();
 
                 // cursor mostra a linha n-1
@@ -150,8 +150,8 @@ public class AcessoDAO {
                     a.setLocId(rs.getInt("local_id"));
                     a.setPesId(rs.getInt("pessoa_id"));
                     a.setData(rs.getTimestamp("acesso_data"));
-                    a.setTipoAcesso(TipoAcesso.valueOf(rs.getString("acesso_tipo")));
-                    a.setStatusAcesso(StatusAcesso.valueOf(rs.getString("acesso_status")));
+                    a.setTipoAcesso(TipoAcesso.valueOf(rs.getString("acesso_tipo").toUpperCase()));
+                    a.setStatusAcesso(StatusAcesso.valueOf(rs.getString("acesso_status").toUpperCase()));
                     listaAcessos.add(a);
                 }
                 return listaAcessos;

@@ -1,5 +1,11 @@
 package com.controleDeAcesso.model;
 
+
+
+/*
+@Entity
+@Table(name = "CASAS")
+*/
 public class Casa {
     private int id;
     private String endereco;

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Acessos</title>
+    
+	  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+	<!-- menu lateral -->
+	<div th:replace="fragments/menu-lateral :: menuLateral"></div>
+	
+	<div class="container">
+    <h2>Consultar Acessos</h2>
+
+    <div class="pesquisa">
+        <form th:object="${user}" method="post">
+            <input type="text" th:field="*{pesquisa}" placeholder="pesquisar por local ou nome">
+            <button type="submit">Pesquisar</button>
+        </form>
+    </div>
+
+    <div id="lista" class="tabela">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-local">Local</th>
+                    <th class="col-nome-pessoa">Pessoa</th>
+                    <th class="col-tipo-pessoa">Tipo Pessoa</th>
+                    <th class="col-data">Data</th>
+                    <th class="col-tipo-acesso">Tipo Acesso</th>
+                    <th class="col-status-acesso">Status Acesso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="acessoDTO : ${acessoDTO}">
+                    <td th:text="${acessoDTO.loc_id}"></td>
+                    <td th:text="${acessoDTO.pes_id}"></td>
+                    <td th:text="${acessoDTO.data}"></td>
+                    <td th:text="${acessoDTO.data}"></td>
+                    <td th:text="${acessoDTO.tipoAcesso}"></td>
+                    <td th:text="${acessoDTO.statusAcesso}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	<div class="paginacao">
+            <button th:if="${paginaAtual > 0}"
+                    th:onclick="'window.location.href=\'/acessos?page=' + (${paginaAtual} - 1) + '&pesquisa=' + (${pesquisa} != null ? ${pesquisa} : '') + '\''">
+                 Anterior
+            </button>
+
+            <span>Página <span th:text="${paginaAtual + 1}">1</span> de <span th:text="${totalPaginas}">3</span></span>
+
+            <button th:if="${paginaAtual + 1 < totalPaginas}"
+                    th:onclick="'window.location.href=\'/acessos?page=' + (${paginaAtual} + 1) + '&pesquisa=' + (${pesquisa} != null ? ${pesquisa} : '') + '\''">
+                Próximo 
+            </button>
+        </div>
+</div>
+
+	 </div>
+  </body>
+
+</html>

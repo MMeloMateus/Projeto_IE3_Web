@@ -2,6 +2,10 @@ package com.controleDeAcesso.model;
 
 import com.controleDeAcesso.util.TipoVinculo;
 
+/*
+@Entity
+@Table(name = "MORADOR_CASA")
+*/
 public class MoradorCasa {
     private int id;
     private int moradorId;

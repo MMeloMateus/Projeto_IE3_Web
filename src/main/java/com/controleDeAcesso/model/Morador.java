@@ -1,7 +1,12 @@
 package com.controleDeAcesso.model;
 
-import java.util.Date;
 
+
+import java.util.Date;
+/*
+@Entity
+@Table(name = "MORADORES")
+*/
 public class Morador extends Pessoa {
 
     public Morador(String nome, String cpf, Date dataNasc, String telefone, String email){

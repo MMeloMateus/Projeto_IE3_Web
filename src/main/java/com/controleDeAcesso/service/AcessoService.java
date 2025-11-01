@@ -3,11 +3,13 @@ package com.controleDeAcesso.service;
 import com.controleDeAcesso.dao.AcessoDAO;
 import com.controleDeAcesso.dto.AcessoDTO;
 import com.controleDeAcesso.model.Acesso;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class AcessoService {
 
     private AcessoDAO acessoDAO;

@@ -1,0 +1,286 @@
+
+
+.menu-lateral {
+    background-color: #1D1D28;
+    padding: 25px;
+    width: 220px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+ .menu-lateral button {
+    width: 160px;
+    padding: 10px 0;
+    background-color: transparent;
+    border: 1px solid #b0b0b0;
+    border-radius: 20px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+ .menu-lateral button:hover {
+	background-color: #2a2a3a;
+	border-color: #fff;
+}
+
+h2{
+	text-align: center;
+	color: #333;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f6f8;
+	margin: 0;
+	padding: 0;
+}
+
+h2 {
+	text-align: center;
+	color: #333;
+}
+
+label {
+	display: block;
+	margin-top: 10px;
+	color: #555;
+}
+
+input, select {
+
+	padding: 8px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	margin-top: 5px;
+}
+
+button {
+	background-color: #1D1D28;
+	color: white;
+	padding: 8px 16px;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+button:hover{
+	opacity: 0.6;
+}
+
+.container {
+    margin-left: 240px; /* deixa espaço para o menu lateral */
+    padding: 40px 20px;
+}
+
+.tabela{
+	padding-top: 20px;
+}
+
+.pesquisa,
+.paginacao,
+.tabela {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #1D1D28;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #e9e9e9;
+    }
+
+    caption {
+      caption-side: top;
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+	
+	.paginacao {
+      width: 15%;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+	
+.tab.active {
+	background-color: #007BFF;
+	color: white;
+	font-weight: bold;
+}
+
+.tab-content {
+	display: none;
+}
+
+.tab-content.active {
+	display: block;
+}
+
+.tabs {
+	display: flex;
+	border-bottom: 2px solid #007BFF;
+	margin-bottom: 20px;
+}
+
+.tab {
+	padding: 10px 20px;
+	cursor: pointer;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	background-color: #eaeaea;
+	margin-right: 5px;
+}
+
+/*Tabela Acessos*/
+.col-local{
+	width: 70px;
+}
+
+.col-nome-pessoa{
+	width: 400px;	
+}
+
+.col-tipo-pessoa{
+	width: 100px;
+}
+
+.col-data{
+	width: 80px;
+}
+
+.col-tipo-acesso{
+	width: 80;
+}
+
+.col-status-pessoa{
+	width: 70px;
+}
+
+
+/*Tabela Pessoas*/
+.col-cpf{
+	width: 50px;
+}
+
+.col-acoes-pessoa{
+	width: 50px;
+}
+
+.col-status-pessoa{
+	width: 50px;
+}
+
+/*Tabela Veiculos*/
+.col-veiculo-placa{
+	width: 50px;
+}
+.col-veiculo-modelo{
+	width: 50px;
+}
+
+.col-veiculo-cor{
+	width: 50px;
+}
+
+/*Tabela Casas*/
+
+.col-numero-casa{
+	width: 50px;
+}
+
+.col-acoes-casa{
+	width: 50px;
+}
+
+/*Tabela Locais*/
+.col-local-descricao{
+	width: 50px;
+}
+
+.pesquisa form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.pesquisa input {
+    flex: 0.3;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/*
+.pesquisa button {
+ 	background-color: #1D1D28;
+	color: white;
+	padding: 8px 16px;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+}
+*/
+
+/* Paginação */
+.paginacao {
+    width: 20%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paginacao button {
+    background-color: #1D1D28;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.paginacao button:hover {
+    opacity: 0.7;
+}
+
+
+
+
+
+
+
+
+
+

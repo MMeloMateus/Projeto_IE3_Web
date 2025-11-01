@@ -2,9 +2,14 @@ package com.controleDeAcesso.model;
 
 import com.controleDeAcesso.util.TipoAcesso;
 import com.controleDeAcesso.util.StatusAcesso;
-import java.sql.Timestamp;
 
+import java.sql.Timestamp;
+/*
+@Entity
+@Table(name = "ACESSOS")
+*/
 public class Acesso {
+
     private int id;
     private int pesId;
     private int locId;

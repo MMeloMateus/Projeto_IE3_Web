@@ -1,7 +1,12 @@
 package com.controleDeAcesso.model;
 
-import java.util.Date;
 
+
+import java.util.Date;
+/*
+@Entity
+@Table(name = "PESSOAS")
+*/
 public class Pessoa {
     private int id;
     private String nome;
