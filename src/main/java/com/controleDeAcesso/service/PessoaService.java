@@ -5,11 +5,13 @@ import com.controleDeAcesso.dto.PessoaDTO;
 import com.controleDeAcesso.dto.PrestadorDTO;
 import com.controleDeAcesso.model.Pessoa;
 import com.controleDeAcesso.util.TipoPessoa;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class PessoaService {
 
     private PessoaDAO pessoaDAO;

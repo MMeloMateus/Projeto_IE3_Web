@@ -3,9 +3,11 @@ package com.controleDeAcesso.service;
 import com.controleDeAcesso.dao.PrestadorDAO;
 import com.controleDeAcesso.dto.PrestadorDTO;
 import com.controleDeAcesso.model.Prestador;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 
+@Service
 public class PrestadorService {
 
     PrestadorDAO prestadorDAO;

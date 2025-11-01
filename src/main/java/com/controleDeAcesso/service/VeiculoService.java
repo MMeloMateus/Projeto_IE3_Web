@@ -4,11 +4,13 @@ import com.controleDeAcesso.dao.VeiculoDAO;
 import com.controleDeAcesso.dto.VeiculoDTO;
 import com.controleDeAcesso.model.Veiculo;
 import com.controleDeAcesso.util.TipoPessoa;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class VeiculoService {
 
     private VeiculoDAO veiculoDAO;

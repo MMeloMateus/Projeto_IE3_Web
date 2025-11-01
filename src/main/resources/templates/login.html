@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+  <head>
+	<meta charset="UTF-8">
+    <title>Login</title>
+	  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+  </head>
+
+  <body>
+    <div class="container">
+		<form th:action="@{/login}" method="post">
+			<h2>Controle De Acesso a Condomínio</h2>
+			<label>Login:</label>
+			<input type="text" name="login" required >
+			<br><br>
+			<label>Senha:</label>
+			<input type="password" name="senha" required>
+			<br><br>
+			<button type="submit">Entrar</button>
+		</form>
+	</div>
+</body>
+
+</html>

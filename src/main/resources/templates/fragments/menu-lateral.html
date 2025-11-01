@@ -5,14 +5,12 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 
-
 	<div th:fragment="menuLateral" class="menu-lateral">
-		<button th:onclick="'window.location.href=\'' + @{/dashboard} + '\''">DashBoard</button>
-		<button th:onclick="'window.location.href=\'' + @{/acessos} + '\''">Acessos</button>
-		<button th:onclick="'window.location.href=\'' + @{/pessoas} + '\''">Pessoas</button>
-		<button th:onclick="'window.location.href=\'' + @{/veiculos} + '\''">Veículos</button>
-		<button th:onclick="'window.location.href=\'' + @{/casas} + '\''">Casas</button>
-		<button th:onclick="'window.location.href=\'' + @{/logout} + '\''" class="btn-sair">Sair</button>
+		<button th:onclick="@{/dashboard}">DashBoard</button>
+		<button th:onclick="@{/acessos}">Acessos</button>
+		<button th:onclick="@{/pessoas}">Pessoas</button>
+		<button th:onclick="@{/veiculos}">Veículos</button>
+		<button th:onclick="@{/casas}">Casas</button>
+		<button th:onclick="@{/login}" class="btn-sair">Sair</button>
 	</div>
-
-	</html>
+</html>

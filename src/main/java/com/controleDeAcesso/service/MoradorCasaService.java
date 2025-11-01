@@ -3,9 +3,11 @@ package com.controleDeAcesso.service;
 import com.controleDeAcesso.dao.MoradorCasaDAO;
 import com.controleDeAcesso.dto.MoradorCasaDTO;
 import com.controleDeAcesso.model.MoradorCasa;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 
+@Service
 public class MoradorCasaService {
 
     private MoradorCasaDAO moradorCasaDAO;

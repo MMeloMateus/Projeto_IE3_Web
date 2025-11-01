@@ -3,11 +3,13 @@ package com.controleDeAcesso.service;
 import com.controleDeAcesso.dao.ServicoDAO;
 import com.controleDeAcesso.dto.ServicoDTO;
 import com.controleDeAcesso.model.Servico;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ServicoService {
 
     private ServicoDAO servicoDAO;

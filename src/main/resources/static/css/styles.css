@@ -71,6 +71,7 @@ button {
 	cursor: pointer;
 }
 
+.button-disabled,
 button:hover{
 	opacity: 0.6;
 }

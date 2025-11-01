@@ -3,11 +3,13 @@ package com.controleDeAcesso.service;
 import com.controleDeAcesso.dao.LocalControladoDAO;
 import com.controleDeAcesso.dto.LocalControladoDTO;
 import com.controleDeAcesso.model.LocalControlado;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class LocalControladoService {
 
     private LocalControladoDAO localControladoDAO;

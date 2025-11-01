@@ -3,11 +3,13 @@ package com.controleDeAcesso.service;
 import com.controleDeAcesso.dao.CasaDAO;
 import com.controleDeAcesso.dto.CasaDTO;
 import com.controleDeAcesso.model.Casa;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class CasaService {
 
     private CasaDAO casaDAO;

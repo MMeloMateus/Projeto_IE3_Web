@@ -4,11 +4,13 @@ import com.controleDeAcesso.dao.VisitanteDAO;
 import com.controleDeAcesso.dto.PrestadorDTO;
 import com.controleDeAcesso.dto.VisitanteDTO;
 import com.controleDeAcesso.model.Visitante;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class VisitanteService {
 
     VisitanteDAO visitanteDAO;
