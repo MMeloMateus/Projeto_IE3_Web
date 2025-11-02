@@ -3,6 +3,16 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/application.properties
+target/classes/com/controleDeAcesso/dao/ConnectionFactorySqlServer.class
+target/classes/com/controleDeAcesso/dao/ConnectionFactoryMySql.class
+target/classes/com/controleDeAcesso/dao/ConnectionFactorySqlServer.class
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
 
 ### STS ###
 .apt_generated
@@ -12,12 +22,33 @@ target/
 .settings
 .springBeans
 .sts4-cache
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/application.properties
+target/classes/com/controleDeAcesso/dao/ConnectionFactorySqlServer.class
+target/classes/com/controleDeAcesso/dao/ConnectionFactoryMySql.class
+target/classes/com/controleDeAcesso/dao/ConnectionFactorySqlServer.class
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/application.properties
+target/classes/com/controleDeAcesso/dao/ConnectionFactorySqlServer.class
+target/classes/com/controleDeAcesso/dao/ConnectionFactoryMySql.class
+target/classes/com/controleDeAcesso/dao/ConnectionFactorySqlServer.class
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+
 
 ### NetBeans ###
 /nbproject/private/
