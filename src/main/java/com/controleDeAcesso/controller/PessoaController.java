@@ -1,5 +1,6 @@
 package com.controleDeAcesso.controller;
 
+import com.controleDeAcesso.dao.PessoaDAO;
 import com.controleDeAcesso.dto.PessoaDTO;
 import com.controleDeAcesso.service.PessoaService;
 import org.springframework.data.domain.Page;
@@ -25,10 +26,8 @@ public class PessoaController {
 
         model.addAttribute("botaoPressionado","pessoas");
 
-        int registrosPorPagina = 5;
-
         //vão se tornar uma linha só futuramente com JPA
-        PageRequest pageable = PageRequest.of(page,registrosPorPagina);
+        PageRequest pageable = PageRequest.of(page,Constantes.registrosPorPagina);
         Page<PessoaDTO> pagina =  PageUtils.toPage(pessoaService.consultarPessoasGeral(),pageable);
         //Page<PessoaDTO> pagina = pessoaService.buscarAcessosPaginados(page, tamanhoPagina, pesquisa);
 

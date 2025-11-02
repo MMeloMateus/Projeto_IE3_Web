@@ -1,6 +1,6 @@
 package com.controleDeAcesso.service;
 
-import com.controleDeAcesso.Views.AcessoView;
+import com.controleDeAcesso.view.AcessoView;
 import com.controleDeAcesso.dao.AcessoDAO;
 import com.controleDeAcesso.dto.AcessoDTO;
 import com.controleDeAcesso.model.Acesso;
@@ -68,11 +68,11 @@ public class AcessoService {
         }
     }
 
-    public List<AcessoView> consultarAcessosAcessoViewOrderData(){
+    public List<AcessoView> consultarAcessosViewOrderData(){
         try {
             return  acessoDAO.consultarAcessosViewOrderData();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao consultar acessos ordenados por data no banco de dados", e);
+            throw new RuntimeException("Erro ao consultar acessos view ordenados por data no banco de dados", e);
         }
 
     }

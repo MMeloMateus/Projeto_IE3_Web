@@ -1,4 +1,4 @@
-package com.controleDeAcesso.Views;
+package com.controleDeAcesso.view;
 
 import com.controleDeAcesso.util.StatusAcesso;
 import com.controleDeAcesso.util.TipoAcesso;

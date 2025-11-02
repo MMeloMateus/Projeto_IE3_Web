@@ -1,11 +1,10 @@
 package com.controleDeAcesso.dao;
 
-import com.controleDeAcesso.Views.AcessoView;
+import com.controleDeAcesso.view.AcessoView;
 import com.controleDeAcesso.util.StatusAcesso;
 import com.controleDeAcesso.util.TipoAcesso;
 
 import com.controleDeAcesso.model.Acesso;
-import com.controleDeAcesso.model.LocalControlado;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -37,9 +37,9 @@
             <tr th:each="pessoaDTO : ${pessoasDTO}">
                 <td th:text="${pessoaDTO.nome}"></td>
                 <td th:text="${pessoaDTO.cpf}"></td>
-                <td th:text="${pessoaDTO.cpf}"></td>
+                <td th:text="${pessoaDTO.tipo}"></td>
                 <td th:text="null"></td>
-                <td th:text="null"></td>
+                <td th:text="${pessoaDTO.ativa}"></td>
             </tr>
             </tbody>
         </table>

@@ -10,7 +10,7 @@ import java.util.Date;
 public class Pessoa {
     private int id;
     private String nome;
-    private String pessoa_tipo;
+    private String tipo;
     private String cpf;
     private Date dataNasc;
     private String telefone;
@@ -24,11 +24,11 @@ public class Pessoa {
     }
 
 
-    public Pessoa(int id, String nome, String cpf, Date dataNasc, String telefone, String email, String pessoa_tipo, boolean ativa) {
+    public Pessoa(int id, String nome, String cpf, Date dataNasc, String telefone, String email, String tipo, boolean ativa) {
         this(nome,cpf,dataNasc,telefone,email);
         this.id = id;
         this.ativa = ativa;
-        this.pessoa_tipo = pessoa_tipo;
+        this.tipo = tipo;
     }
 
     public Pessoa(String nome, String cpf, Date dataNasc, String telefone, String email){
@@ -57,12 +57,12 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public String getPessoa_tipo() {
-        return pessoa_tipo;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setPessoa_tipo(String pessoa_tipo) {
-        this.pessoa_tipo = pessoa_tipo;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getCpf() {
@@ -110,7 +110,7 @@ public class Pessoa {
         return "Pessoa{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", pessoa_tipo='" + pessoa_tipo + '\'' +
+                ", tipo='" + tipo + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", dataNasc=" + dataNasc +
                 ", telefone='" + telefone + '\'' +

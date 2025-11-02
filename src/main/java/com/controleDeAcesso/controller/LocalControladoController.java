@@ -28,10 +28,8 @@ public class LocalControladoController {
 
         model.addAttribute("botaoPressionado","locais");
 
-        int registrosPorPagina = 5;
-
         //vão se tornar uma linha só futuramente com JPA
-        PageRequest pageable = PageRequest.of(page,registrosPorPagina);
+        PageRequest pageable = PageRequest.of(page,Constantes.registrosPorPagina);
         Page<LocalControladoDTO> pagina =  PageUtils.toPage(localControladoService.consultarLocaisControladosGeral(),pageable);
         //Page<AcessoDTO> pagina = acessoService.buscarAcessosPaginados(page, tamanhoPagina, pesquisa);
 

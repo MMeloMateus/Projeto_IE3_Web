@@ -1,7 +1,7 @@
 package com.controleDeAcesso.dao;
 
 import com.controleDeAcesso.model.Casa;
-import com.controleDeAcesso.Views.CasaView;
+import com.controleDeAcesso.view.CasaView;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -130,7 +130,7 @@ public class CasaDAO {
 
 
     // Consultar Views Casas
-    public List<CasaView> consultarCasaViewGeral() throws SQLException {
+    public List<CasaView> consultarCasasViewGeral() throws SQLException {
 
         String sql = "SELECT " +
                     "a.casa_ender, " +

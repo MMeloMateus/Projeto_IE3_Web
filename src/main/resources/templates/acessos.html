@@ -35,13 +35,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="acessoDTO : ${acessosDTO}">
-                        <td th:text="${acessoDTO.locId}"></td>
-                        <td th:text="${acessoDTO.pesId}"></td>
-                        <td th:text="${acessoDTO.data}"></td>
-                        <td th:text="${acessoDTO.data}"></td>
-                        <td th:text="${acessoDTO.tipoAcesso}"></td>
-                        <td th:text="${acessoDTO.statusAcesso}"></td>
+                    <tr th:each="acessoView : ${acessosView}">
+                        <td th:text="${acessoView.locNome}"></td>
+                        <td th:text="${acessoView.pesNome}"></td>
+                        <td th:text="${acessoView.tipoPessoa}"></td>
+                        <td th:text="${acessoView.data}"></td>
+                        <td th:text="${acessoView.tipoAcesso}"></td>
+                        <td th:text="${acessoView.statusAcesso}"></td>
                     </tr>
                 </tbody>
             </table>

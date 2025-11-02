@@ -193,7 +193,7 @@ table {
 }
 
 .col-tipo-acesso{
-	width: 80;
+	width: 80px;
 }
 
 .col-status-pessoa{
@@ -230,6 +230,10 @@ table {
 
 .col-numero-casa{
 	width: 50px;
+}
+
+.col-endereco-casa{
+    width: 100px;
 }
 
 .col-acoes-casa{

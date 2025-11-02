@@ -34,12 +34,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="veiculoDTO : ${veiculosDTO}">
-                <td th:text="${veiculoDTO.placa}"></td>
-                <td th:text="${veiculoDTO.pesId}"></td>
-                <td th:text="${veiculoDTO.pesId}"></td>
-                <td th:text="${veiculoDTO.modelo}"></td>
-                <td th:text="${veiculoDTO.cor}"></td>
+            <tr th:each="veiculoView : ${veiculosView}">
+                <td th:text="${veiculoView.placa}"></td>
+                <td th:text="${veiculoView.pesNome}"></td>
+                <td th:text="${veiculoView.tipoResponsavel}"></td>
+                <td th:text="${veiculoView.modelo}"></td>
+                <td th:text="${veiculoView.cor}"></td>
             </tr>
             </tbody>
         </table>

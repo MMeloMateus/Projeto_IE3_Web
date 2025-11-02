@@ -26,16 +26,16 @@
         <table>
             <thead>
             <tr>
-                <th class="col-numero-casa">Endereço</th>
+                <th class="col-endereco-casa">Endereço</th>
                 <th class="col-nome-pessoa">Morador</th>
                 <th class="col-tipo-vinculo">Tipo Vínculo</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="moradorCasaDTO : ${listaMoradorCasaDTO}">
-                <td th:text="${moradorCasaDTO.moradorId}"></td>
-                <td th:text="${moradorCasaDTO.casaId}"></td>
-                <td th:text="${moradorCasaDTO.tipoVinculo}"></td>
+            <tr th:each="casaView : ${casasView}">
+                <td th:text="${casaView.endereco}"></td>
+                <td th:text="${casaView.nomeMorador}"></td>
+                <td th:text="${casaView.tipoVinculo}"></td>
             </tr>
             </tbody>
         </table>

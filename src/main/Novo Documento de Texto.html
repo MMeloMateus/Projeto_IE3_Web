@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Pessoas</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+
+    <style>
+        /* Estilos Globais e do Layout Principal (BorderPane -> Flex/Grid) */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Área Central (VBox) */
+        .center-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        /* Título "Cadastro Pessoa" */
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Mapeamento do TabPane para HTML */
+        .tab-pane {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .tab-header {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .tab-header button {
+            padding: 10px 15px;
+            border: none;
+            background: #f4f4f4;
+            cursor: pointer;
+            border-right: 1px solid #ccc;
+        }
+
+        .tab-header button.active {
+            background: white;
+            border-bottom: 1px solid white;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Conteúdo das abas (VBox) */
+        .form-vbox {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* HBox para "Tipo:*" */
+        .hbox-tipo {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* GridPane para Dados Básicos */
+        .grid-pane {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .grid-pane label {
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        /* Estilo dos campos de texto e seleção */
+        input[type="text"], input[type="email"], input[type="tel"], select, input[type="date"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 35px; /* Ajuste para ter altura similar aos botões ChoiceBox */
+            box-sizing: border-box;
+        }
+
+        /* Estilos dos TableViews */
+        .table-view {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .table-view th, .table-view td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table-view th {
+            background-color: #f2f2f2;
+        }
+
+        /* Estilo para a HBox de botões inferiores */
+        .bottom-buttons-hbox {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            padding-top: 20px;
+        }
+
+        .bottom-buttons-hbox button {
+            width: 100px;
+            background-color: #1D1D28;
+            border-radius: 20px;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Botão "Anexar Imagem" */
+        .btn-anexar {
+            background-color: #1D1D28;
+            border-radius: 20px;
+            color: white;
+            padding: 10px;
+            width: 150px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Botões "Adicionar" nos Tabs */
+        .btn-adicionar {
+            background-color: #1D1D28;
+            border-radius: 20px;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Classes específicas para VBox do Visitante e Prestador */
+        .visitante-pane, .prestador-pane {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Estilos de HBox em Autorizações/Veículos/Casas/Serviços */
+        .hbox-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Ajuste de largura para inputs específicos */
+        #cpfField { width: 135px; }
+        #nomeField { width: 289px; }
+        #tipoPessoaChoiceBox { width: 97px; }
+        .grid-pane input[type="tel"] { width: 132px; }
+        .grid-pane input[type="email"] { width: 228px; }
+        #empresaField { width: 414px; }
+        #cnpjField { width: 135px; }
+
+
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/menu-lateral :: menuLateral"></div>
+
+<div class="center-content">
+    <div class="title">Cadastro Pessoa</div>
+
+    <div class="tab-pane">
+        <div class="tab-header" id="tab-header">
+            <button onclick="openTab(event, 'pessoa')" class="active" id="btn-pessoa">Pessoa</button>
+            <button onclick="openTab(event, 'autorizacoes')" id="btn-autorizacoes">Autorizações</button>
+            <button onclick="openTab(event, 'veiculos')" id="btn-veiculos">Veículos</button>
+            <button onclick="openTab(event, 'casas')" id="btn-casas">Casas</button>
+            <button onclick="openTab(event, 'servicos')" id="btn-servicos">Serviços</button>
+        </div>
+
+        <div id="pessoa" class="tab-content active">
+            <form action="#" th:action="@{/pessoas/salvar}" th:object="${pessoaForm}" method="post" class="form-vbox">
+                <label style="font-weight: bold;">Campos obrigatórios *</label>
+
+                <div class="hbox-tipo">
+                    <label style="width: 115px; font-size: 14px;">Tipo:*</label>
+                    <select id="tipoPessoaChoiceBox" name="tipoPessoa">
+                        <option value="MORADOR">Morador</option>
+                        <option value="VISITANTE">Visitante</option>
+                        <option value="PRESTADOR">Prestador</option>
+                    </select>
+                </div>
+
+                <div class="grid-pane">
+                    <label>Nome:*</label>
+                    <input type="text" id="nomeField" name="nome" />
+
+                    <label>CPF:*</label>
+                    <input type="text" id="cpfField" name="cpf" />
+
+                    <label>Data de Nascimento:*</label>
+                    <input type="date" id="dataNascimentoPicker" name="dataNascimento" />
+
+                    <label>Telefone</label>
+                    <input type="tel" name="telefone" />
+
+                    <label>Email</label>
+                    <input type="email" name="email" />
+                </div>
+
+                <div class="visitante-pane" id="visitantePane">
+                    <label style="width: 194px;">Morador associado*</label>
+                    <select name="moradorAssociadoId">
+                        <option th:each="morador : ${moradores}" th:value="${morador.id}" th:text="${morador.nome}">Morador X</option>
+                    </select>
+                </div>
+
+                <div class="prestador-pane" id="prestadorPane">
+                    <label>Empresa:</label>
+                    <input type="text" id="empresaField" name="empresa" />
+                    <label>CNPJ:</label>
+                    <input type="text" id="cnpjField" name="cnpj" />
+                </div>
+
+                <button type="button" class="btn-anexar" onclick="handleAnexarFoto()">Anexar Imagem*</button>
+
+                <div class="bottom-buttons-hbox" style="margin-top: 20px;">
+                    <button type="submit" id="salvarButton">Salvar Tudo</button>
+                    <button type="button" id="salvarButton1" onclick="window.history.back()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="autorizacoes" class="tab-content">
+            <div class="form-vbox" style="gap: 10px;">
+                <form action="#" th:action="@{/autorizacoes/adicionar}" method="post" class="hbox-controls" style="gap: 15px;">
+                    <label for="dataInicio">Início:</label>
+                    <input type="date" id="dataInicio" name="dataInicio" style="width: 140px;" />
+
+                    <label for="dataFim">Fim:</label>
+                    <input type="date" id="dataFim" name="dataFim" style="width: 140px;" />
+
+                    <label for="motivo">Motivo:</label>
+                    <input type="text" id="motivo" name="motivo" placeholder="Motivo da Autorização" style="width: 180px;" />
+
+                    <button type="submit" class="btn-adicionar" style="width: 120px;">Adicionar</button>
+                </form>
+
+                <table class="table-view">
+                    <thead>
+                    <tr>
+                        <th style="width: 140px;">Data Início</th>
+                        <th style="width: 140px;">Data Fim</th>
+                        <th style="width: 300px;">Motivo</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="auth : ${autorizacoesCadastradas}">
+                        <td th:text="${#dates.format(auth.dataInicio, 'dd/MM/yyyy')}">01/10/2025</td>
+                        <td th:text="${#dates.format(auth.dataFim, 'dd/MM/yyyy')}">31/10/2025</td>
+                        <td th:text="${auth.motivo}">Visita de rotina</td>
+                        <td>
+                            <form th:action="@{/autorizacoes/remover/{id}(id=${auth.id})}" method="post" style="display:inline;">
+                                <button type="submit" style="background: none; border: none; color: red; cursor: pointer; padding: 0;">[x] Remover</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${autorizacoesCadastradas == null or autorizacoesCadastradas.empty}">
+                        <td colspan="4">Nenhuma autorização adicionada.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="veiculos" class="tab-content">
+            <div class="form-vbox" style="gap: 10px;">
+                <form action="#" th:action="@{/veiculos/adicionar}" method="post" class="hbox-controls">
+                    <input type="text" id="txtPlaca" name="placa" placeholder="Placa" style="width: 110px;" />
+                    <input type="text" id="txtModelo" name="modelo" placeholder="Modelo" style="width: 149px;" />
+                    <input type="text" id="txtCor" name="cor" placeholder="Cor" style="width: 126px;" />
+                    <button type="submit" class="btn-adicionar">Adicionar</button>
+                </form>
+
+                <table class="table-view">
+                    <thead>
+                    <tr>
+                        <th style="width: 106px;">Placa</th>
+                        <th style="width: 167px;">Modelo</th>
+                        <th style="width: 169px;">Cor</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="veiculo : ${veiculosCadastrados}">
+                        <td th:text="${veiculo.placa}">ABC-1234</td>
+                        <td th:text="${veiculo.modelo}">Fiat Uno</td>
+                        <td th:text="${veiculo.cor}">Vermelho</td>
+                        <td>
+                            <form th:action="@{/veiculos/remover/{id}(id=${veiculo.id})}" method="post" style="display:inline;">
+                                <button type="submit" style="background: none; border: none; color: red; cursor: pointer;">[x] Remover</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${veiculosCadastrados == null or veiculosCadastrados.empty}">
+                        <td colspan="4">Nenhum veículo adicionado.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="casas" class="tab-content">
+            <div class="form-vbox" style="gap: 10px;">
+                <form action="#" th:action="@{/casas/adicionar}" method="post" class="hbox-controls">
+                    <input type="text" id="txtNumeroCasa" name="numero" placeholder="Número" style="width: 92px;" />
+
+                    <label>Relacionamento:</label>
+                    <select id="selectRelacionamento" name="relacionamento" style="width: 97px; height: 35px;">
+                        <option value="PROPRIETARIO">Proprietário</option>
+                        <option value="INQUILINO">Inquilino</option>
+                        <option value="DEPENDENTE">Dependente</option>
+                    </select>
+
+                    <button type="submit" class="btn-adicionar">Adicionar</button>
+                </form>
+
+                <table class="table-view">
+                    <thead>
+                    <tr>
+                        <th style="width: 75px;">Número</th>
+                        <th style="width: 113px;">Relacionamento</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="casa : ${casasAssociadas}">
+                        <td th:text="${casa.numero}">101</td>
+                        <td th:text="${casa.relacionamento}">Proprietário</td>
+                        <td>
+                            <form th:action="@{/casas/remover/{id}(id=${casa.id})}" method="post" style="display:inline;">
+                                <button type="submit" style="background: none; border: none; color: red; cursor: pointer; padding: 0;">[x] Remover</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${casasAssociadas == null or casasAssociadas.empty}">
+                        <td colspan="3">Nenhuma casa associada.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="servicos" class="tab-content">
+            <div class="form-vbox" style="gap: 10px;">
+                <form action="#" th:action="@{/servicos/adicionar}" method="post" class="hbox-controls">
+                    <input type="text" id="txtTipoServico" name="tipoServico" placeholder="Tipo de Serviço" style="width: 200px;" />
+
+                    <label>Detalhes (Opcional):</label>
+                    <input type="text" id="txtDetalhesServico" name="detalhes" placeholder="Ex: Eletricista, Encanador" style="width: 250px;" />
+
+                    <button type="submit" class="btn-adicionar">Adicionar</button>
+                </form>
+
+                <table class="table-view">
+                    <thead>
+                    <tr>
+                        <th style="width: 220px;">Tipo de Serviço</th>
+                        <th style="width: 270px;">Detalhes</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="servico : ${servicosCadastrados}">
+                        <td th:text="${servico.tipo}">Jardinagem</td>
+                        <td th:text="${servico.detalhes}">Manutenção de áreas verdes</td>
+                        <td>
+                            <form th:action="@{/servicos/remover/{id}(id=${servico.id})}" method="post" style="display:inline;">
+                                <button type="submit" style="background: none; border: none; color: red; cursor: pointer; padding: 0;">[x] Remover</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${servicosCadastrados == null or servicosCadastrados.empty}">
+                        <td colspan="3">Nenhum serviço adicionado.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script th:src="@{/js/pessoas.js}"></script>
+<script>
+    // Armazena as IDs de todas as abas para fácil referência
+    const ALL_TABS = [
+        'btn-autorizacoes', 'autorizacoes',
+        'btn-veiculos', 'veiculos',
+        'btn-casas', 'casas',
+        'btn-servicos', 'servicos'
+    ];
+
+    // Mapeamento da lógica de negócio
+    const TABS_TO_HIDE = {
+        'MORADOR': ['btn-servicos', 'servicos'],
+        'PRESTADOR': ['btn-casas', 'casas', 'btn-veiculos', 'veiculos'],
+        'VISITANTE': ['btn-casas', 'casas', 'btn-servicos', 'servicos']
+    };
+
+    // Função simples para simular a funcionalidade de abas (TabPane)
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+
+        // Oculta todo o conteúdo das abas
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+
+        // Remove a classe "active" de todos os botões visíveis
+        tablinks = document.getElementById("tab-header").querySelectorAll("button:not([style*='none'])");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+
+        // Mostra a aba atual e adiciona "active" ao botão
+        const currentContent = document.getElementById(tabName);
+        const currentButton = evt.currentTarget;
+
+        if (currentContent) {
+            currentContent.style.display = "block";
+            currentContent.classList.add("active");
+        }
+        if (currentButton) {
+            currentButton.classList.add("active");
+        }
+    }
+
+    /**
+     * Aplica a lógica de esconder abas com base no tipo de pessoa selecionado.
+     * Além disso, exibe/oculta os campos de Visitante/Prestador na aba 'Pessoa'.
+     */
+    function filterTabsAndFieldsByType(selectedValue) {
+
+        // 1. Mostrar/Esconder Campos na aba 'Pessoa' (Lógica existente)
+        const visitantePane = document.getElementById('visitantePane');
+        const prestadorPane = document.getElementById('prestadorPane');
+
+        if (visitantePane) visitantePane.style.display = 'none';
+        if (prestadorPane) prestadorPane.style.display = 'none';
+
+        if (selectedValue === 'VISITANTE' && visitantePane) {
+            visitantePane.style.display = 'flex';
+        } else if (selectedValue === 'PRESTADOR' && prestadorPane) {
+            prestadorPane.style.display = 'flex';
+        }
+
+        // 2. Mostrar todas as abas (Reset)
+        ALL_TABS.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.style.display = ''; // Volta ao default (block ou flex/inline-block)
+            }
+        });
+
+        // 3. Ocultar as abas específicas para o tipo selecionado
+        const hiddenIds = TABS_TO_HIDE[selectedValue];
+        if (hiddenIds) {
+            hiddenIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+        }
+
+        // 4. Garante que a primeira aba visível seja selecionada após a mudança
+        const tabHeader = document.getElementById("tab-header");
+        if (tabHeader) {
+            const firstVisibleButton = tabHeader.querySelector("button:not([style*='none'])");
+            if (firstVisibleButton) {
+                // Simula o clique para garantir que a aba correta e seu conteúdo apareçam
+                firstVisibleButton.click();
+            }
+        }
+    }
+
+    // Garante que o estado inicial e o evento de mudança funcionem
+    document.addEventListener("DOMContentLoaded", function() {
+        const tipoPessoaSelect = document.getElementById('tipoPessoaChoiceBox');
+
+        // Adiciona o listener para o SELECT
+        if (tipoPessoaSelect) {
+            tipoPessoaSelect.addEventListener('change', function() {
+                filterTabsAndFieldsByType(this.value);
+            });
+        }
+
+        // Configura o estado inicial (dispara a lógica ao carregar a página)
+        if (tipoPessoaSelect) {
+            filterTabsAndFieldsByType(tipoPessoaSelect.value);
+        } else {
+             // Se o select não existir, garanta que a primeira aba abra
+             document.querySelector(".tab-header button").click();
+        }
+    });
+
+    function handleAnexarFoto() {
+        alert('Ação de anexar foto');
+    }
+</script>
+
+</body>
+</html>

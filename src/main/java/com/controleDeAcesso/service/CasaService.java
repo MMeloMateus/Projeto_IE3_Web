@@ -1,7 +1,7 @@
 package com.controleDeAcesso.service;
 
 import com.controleDeAcesso.dao.CasaDAO;
-import com.controleDeAcesso.Views.CasaView;
+import com.controleDeAcesso.view.CasaView;
 import com.controleDeAcesso.dto.CasaDTO;
 import com.controleDeAcesso.model.Casa;
 import org.springframework.stereotype.Service;
@@ -98,9 +98,14 @@ public class CasaService {
         }
     }
 
-    public List<CasaView> consultarCasasView() throws SQLException {
+    public List<CasaView> consultarCasasView(){
+        try{
+            return casaDAO.consultarCasasViewGeral();
+        } catch (SQLException e) {
+            throw new RuntimeException("erro ao consultar casas view no banco de dados", e);
+        }
 
-        return casaDAO.consultarCasaViewGeral();
+
     }
 
 }

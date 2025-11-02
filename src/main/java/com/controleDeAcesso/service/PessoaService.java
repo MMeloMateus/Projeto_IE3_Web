@@ -2,7 +2,6 @@ package com.controleDeAcesso.service;
 
 import com.controleDeAcesso.dao.PessoaDAO;
 import com.controleDeAcesso.dto.PessoaDTO;
-import com.controleDeAcesso.dto.PrestadorDTO;
 import com.controleDeAcesso.model.Pessoa;
 import com.controleDeAcesso.util.TipoPessoa;
 import org.springframework.stereotype.Service;
@@ -47,6 +46,8 @@ public class PessoaService {
         dto.setDataNasc(pessoa.getDataNasc());
         dto.setTelefone(pessoa.getTelefone());
         dto.setEmail(pessoa.getEmail());
+        dto.setTipo(pessoa.getTipo());
+        dto.setAtiva(pessoa.isAtiva());
 
         return dto;
     }

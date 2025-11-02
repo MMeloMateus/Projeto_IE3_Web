@@ -92,7 +92,8 @@ public class LocalControladoDAO {
                 while (rs.next()) {
                     LocalControlado l = new LocalControlado();
                     l.setId(rs.getInt("local_id"));
-                    l.setNome(rs.getString("local_id"));
+                    l.setNome(rs.getString("local_nome"));
+                    l.setDescricao(rs.getString("local_descricao"));
                     listaLocaisControlados.add(l);
                 }
                 return listaLocaisControlados;
