@@ -25,7 +25,7 @@ public class LoginController {
 
         if(login != null && senha != null){
             if(login.equals("admin") && senha.equals("admin")){
-                return "redirect:/acessos";
+                return "redirect:/home";
             }
             else {
                 System.out.println("login ou senha incorreto(s)");

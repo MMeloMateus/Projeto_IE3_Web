@@ -1,48 +1,45 @@
 package com.controleDeAcesso.controller;
 
-import com.controleDeAcesso.dto.AcessoDTO;
-import com.controleDeAcesso.service.AcessoService;
+
+import com.controleDeAcesso.dto.LocalControladoDTO;
+import com.controleDeAcesso.service.LocalControladoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Page;
 
-
-import java.util.List;
-
 @Controller
-public class AcessoController {
+public class LocalControladoController {
 
     @Autowired
-    private AcessoService acessoService;
+    private LocalControladoService localControladoService;
 
-    public AcessoController(){
-        acessoService = new AcessoService();
+    public LocalControladoController(){
+        localControladoService = new LocalControladoService();
     }
 
-    @GetMapping(value = "/acessos")
+    @GetMapping(value = "/locais")
     public String listarAcessos(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(required = false) String pesquisa,
                                 Model model){
 
-        model.addAttribute("botaoPressionado","acessos");
+        model.addAttribute("botaoPressionado","locais");
 
         int registrosPorPagina = 5;
 
         //vão se tornar uma linha só futuramente com JPA
         PageRequest pageable = PageRequest.of(page,registrosPorPagina);
-        Page<AcessoDTO> pagina =  PageUtils.toPage(acessoService.consultarAcessosOrderData(),pageable);
+        Page<LocalControladoDTO> pagina =  PageUtils.toPage(localControladoService.consultarLocaisControladosGeral(),pageable);
         //Page<AcessoDTO> pagina = acessoService.buscarAcessosPaginados(page, tamanhoPagina, pesquisa);
 
-        model.addAttribute("acessosDTO",pagina.getContent());
+        model.addAttribute("locaisDTO",pagina.getContent());
         model.addAttribute("paginaAtual", page);
         model.addAttribute("totalPaginas", pagina.getTotalPages());
         model.addAttribute("pesquisa", pesquisa);
 
-        return "acessos";
+        return "locais";
     }
 }

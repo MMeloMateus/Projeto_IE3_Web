@@ -1,4 +1,10 @@
 
+.login-container{
+	display: flex;
+	justify-content: center; /* Centers horizontally */
+	align-items: center; /* Centers vertically */
+	height: 75vh;
+}
 
 .menu-lateral {
     background-color: #1D1D28;
@@ -29,6 +35,12 @@
  .menu-lateral button:hover {
 	background-color: #2a2a3a;
 	border-color: #fff;
+}
+
+.menu-lateral button.ativo {
+    background-color: #00b3ff;
+    color: #1D1D28;
+    font-weight: bold;
 }
 
 h2{
@@ -224,9 +236,17 @@ table {
 	width: 50px;
 }
 
+.col-tipo-vinculo{
+    width: 50px;
+}
+
 /*Tabela Locais*/
 .col-local-descricao{
-	width: 50px;
+	width: 300px;
+}
+
+.col-acoes{
+    width: 50px;
 }
 
 .pesquisa form {

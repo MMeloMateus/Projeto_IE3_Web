@@ -6,11 +6,33 @@
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 
 	<div th:fragment="menuLateral" class="menu-lateral">
-		<button th:onclick="@{/dashboard}">DashBoard</button>
-		<button th:onclick="@{/acessos}">Acessos</button>
-		<button th:onclick="@{/pessoas}">Pessoas</button>
-		<button th:onclick="@{/veiculos}">Veículos</button>
-		<button th:onclick="@{/casas}">Casas</button>
-		<button th:onclick="@{/login}" class="btn-sair">Sair</button>
+
+		<a th:href="@{/dashboard}">
+			<button  th:classappend="${botaoPressionado == 'dashboard' ? 'ativo' : ''}">DashBoard</button>
+		</a>
+
+		<a th:href="@{/acessos}">
+			<button  th:classappend="${botaoPressionado == 'acessos' ? 'ativo' : ''}">Acessos</button>
+		</a>
+
+		<a th:href="@{/pessoas}">
+			<button  th:classappend="${botaoPressionado == 'pessoas' ? 'ativo' : ''}">Pessoas</button>
+		</a>
+
+		<a th:href="@{/veiculos}">
+			<button  th:classappend="${botaoPressionado == 'veiculos' ? 'ativo' : ''}">Veículos</button>
+		</a>
+
+		<a th:href="@{/casas}">
+			<button  th:classappend="${botaoPressionado == 'casas' ? 'ativo' : ''}" >Casas</button>
+		</a>
+
+		<a th:href="@{/locais}">
+			<button  th:classappend="${botaoPressionado == 'locais' ? 'ativo' : ''}" >Locais</button>
+		</a>
+
+		<a th:href="@{/login}">
+			<button  th:classappend="${botaoPressionado == 'login' ? 'ativo' : ''}">Sair</button>
+		</a>
 	</div>
 </html>
