@@ -137,8 +137,10 @@ public class CasaDAO {
                     "b.tipo_vinculo, " +
                     "c.pessoa_nome " +
                     "FROM CASAS a " +
-                    "INNER JOIN MORADOR_CASA b ON a.casa_id = b.casa_id" +
-                    "INNER JOIN PESSOAS c ON b.morador_id = c.pessoa_id";
+                    "INNER JOIN MORADOR_CASA b " +
+                    "ON a.casa_id = b.casa_id " +
+                    "INNER JOIN PESSOAS c " +
+                    "ON b.morador_id = c.pessoa_id ";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

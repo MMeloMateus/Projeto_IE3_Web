@@ -231,7 +231,7 @@ public class AcessoDAO {
                 "a.acesso_tipo, " +
                 "a.acesso_status, " +
                 "b.pessoa_nome AS pessoa_nome, " +
-                "b.pessoa_tipo" +
+                "b.pessoa_tipo, " +
                 "c.local_nome AS local_nome " +
                 "FROM ACESSOS a " +
                 "INNER JOIN PESSOAS b ON a.pessoa_id = b.pessoa_id " +
