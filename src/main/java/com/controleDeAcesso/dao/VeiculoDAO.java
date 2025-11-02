@@ -1,7 +1,10 @@
 package com.controleDeAcesso.dao;
 
-import com.controleDeAcesso.view.VeiculoView;
+import com.controleDeAcesso.Views.AcessoView;
+import com.controleDeAcesso.Views.VeiculoView;
 import com.controleDeAcesso.model.Veiculo;
+import com.controleDeAcesso.util.StatusAcesso;
+import com.controleDeAcesso.util.TipoAcesso;
 import com.controleDeAcesso.util.TipoPessoa;
 
 import java.sql.*;
