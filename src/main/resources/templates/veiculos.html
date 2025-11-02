@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Veiculos</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<!-- menu lateral -->
+<div th:replace="~{fragments/menu-lateral :: menuLateral}"></div>
+
+<div class="container">
+    <h2>Consultar Veículos</h2>
+
+    <div class="pesquisa">
+        <form th:action="@{/veiculos}" method="get">
+            <input type="text" name="pesquisa" placeholder="Pesquisar por placa ou responsável"
+                   th:value="${pesquisa}">
+            <button type="submit">Pesquisar</button>
+        </form>
+    </div>
+
+    <div id="lista" class="tabela">
+        <table>
+            <thead>
+            <tr>
+                <th class="col-veiculo-placa">Placa</th>
+                <th class="col-nome-pessoa">Responsável</th>
+                <th class="col-tipo-pessoa">Tipo Responsável</th>
+                <th class="col-veiculo-modelo">Modelo</th>
+                <th class="col-veiculo-cor">Cor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="veiculoView : ${veiculosView}">
+                <td th:text="${veiculoView.placa}"></td>
+                <td th:text="${veiculoView.pesNome}"></td>
+                <td th:text="${veiculoView.tipoResponsavel}"></td>
+                <td th:text="${veiculoView.modelo}"></td>
+                <td th:text="${veiculoView.cor}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="paginacao">
+
+        <a th:if="${paginaAtual > 0}"
+           th:href="@{/veiculos(page=${paginaAtual - 1}, pesquisa=${pesquisa})}">
+            <button> Anterior </button>
+        </a>
+        <span th:unless="${paginaAtual > 0}" class="button-disabled">Anterior</span>
+
+        <span>Página <span th:text="${paginaAtual + 1}">1</span> de <span th:text="${totalPaginas}">3</span></span>
+
+        <a th:if="${paginaAtual + 1 < totalPaginas}"
+           th:href="@{/veiculos(page=${paginaAtual + 1}, pesquisa=${pesquisa})}">
+            <button> Próximo </button>
+        </a>
+        <span th:unless="${paginaAtual + 1 < totalPaginas}" class="button-disabled">Próximo</span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+package com.controleDeAcesso.dao;
+
+import com.controleDeAcesso.view.VeiculoView;
+import com.controleDeAcesso.model.Veiculo;
+import com.controleDeAcesso.util.TipoPessoa;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class VeiculoDAO {
+
+    // Gravar
+    public int incluirVeiculo(Veiculo veiculo) throws SQLException {
+
+        String sql = "INSERT INTO VEICULOS (vei_placa, pessoa_id, vei_cor, vei_modelo) VALUES (?,?,?,?)";
+
+        // Abre e fecha o conector
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, veiculo.getPlaca());
+            stmt.setInt(2, veiculo.getPesId());
+            stmt.setString(3, veiculo.getCor());
+            stmt.setString(4, veiculo.getModelo());
+
+            // Linha afetada pela ação
+            int affectedRows = stmt.executeUpdate();
+
+            // Cursos sempre fica um antes
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // id gerado
+                }
+            }
+
+            // Retornar a linha afetada pela ação
+            return affectedRows;
+        }
+    }
+
+    @Deprecated
+    // Cuidado, a discutir implementação. Alterar um ID único de veiculo pode causar prejuízos a coeerência do BD
+    // Atualizar - Retorna boolean
+    public boolean atualizarVeiculo(Veiculo veiculo) throws SQLException {
+
+        String sql = "UPDATE VEICULOS SET vei_placa=?, pessoa_id=?, vei_cor=?, vei_modelo=? ";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, veiculo.getPlaca());
+            stmt.setInt(2, veiculo.getPesId());
+            stmt.setString(3, veiculo.getCor());
+            stmt.setString(4,veiculo.getModelo());
+
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    // Consultar
+    public Veiculo consultarVeiculo(String vei_placa) throws SQLException {
+
+        String sql = "SELECT * FROM VEICULOS WHERE vei_placa = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, vei_placa);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                // cursor mostra a linha n-1
+                if (rs.next()) {
+                    Veiculo v = new Veiculo();
+                    v.setPlaca(rs.getString("vei_placa"));
+                    v.setPesId(rs.getInt("pessoa_id"));
+                    v.setCor(rs.getString("vei_cor"));
+                    v.setModelo(rs.getString("vei_modelo"));
+                    return v;
+                }
+                return null;
+            }
+        }
+    }
+
+    // Consultar Veiculo Geral
+    public List<Veiculo> consultarVeiculosGeral() throws SQLException {
+
+        String sql = "SELECT * FROM VEICULOS";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                List<Veiculo> listaVeiculos = new ArrayList<>();
+
+                // cursor mostra a linha n-1
+                while (rs.next()) {
+                    Veiculo v = new Veiculo();
+                    v.setPlaca(rs.getString("vei_placa"));
+                    v.setPesId(rs.getInt("pessoa_id"));
+                    v.setCor(rs.getString("vei_cor"));
+                    v.setModelo(rs.getString("vei_modelo"));
+                    listaVeiculos.add(v);
+                }
+                return listaVeiculos;
+            }
+        }
+    }
+
+    // Consultar Veiculo por Tipo Responsavel
+    public List<Veiculo> consultarVeiculosPorTipoPessoa(TipoPessoa tipoPessoa) throws SQLException {
+
+        String sql;
+
+        // Também já vai buscar a pessoa, podemos retirar caso necessário a busca da pessoa
+        if(tipoPessoa.equals(TipoPessoa.MORADOR)){
+            sql = "SELECT A.*, C.* \n" +
+                    "FROM PESSOAS A\n" +
+                    "INNER JOIN MORADOR B ON A.pessoa_id = B.pessoa_id\n" +
+                    "INNER JOIN VEICULOS C ON A.pessoa_id = C.pessoa_id;";
+        }
+        else if (tipoPessoa.equals(TipoPessoa.PRESTADOR)){
+            sql = "SELECT A.*, C.* \n" +
+                    "FROM PESSOAS A\n" +
+                    "INNER JOIN PRESTADOR B ON A.pessoa_id = B.pessoa_id\n" +
+                    "INNER JOIN VEICULOS C ON A.pessoa_id = C.pessoa_id;";
+        }
+        else if(tipoPessoa.equals(TipoPessoa.VISITANTE)){
+            sql = "SELECT A.*, C.* \n" +
+                    "FROM PESSOAS A\n" +
+                    "INNER JOIN VISITANTE B ON A.pessoa_id = B.pessoa_id\n" +
+                    "INNER JOIN VEICULOS C ON A.pessoa_id = C.pessoa_id;";
+        }
+        else {
+            throw new IllegalArgumentException("Tipo de pessoa inválido: " + tipoPessoa);
+        }
+
+        Veiculo veiculo = new Veiculo() ;
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, veiculo.getPlaca());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                List<Veiculo> listaVeiculos = new ArrayList<>();
+
+                // cursor mostra a linha n-1
+                while (rs.next()) {
+                    Veiculo v = new Veiculo();
+                    v.setPlaca(rs.getString("vei_placa"));
+                    v.setPesId(rs.getInt("pessoa_id"));
+                    v.setCor(rs.getString("vei_cor"));
+                    v.setModelo(rs.getString("vei_modelo"));
+                    listaVeiculos.add(v);
+                }
+                return listaVeiculos;
+            }
+        }
+    }
+
+    // Deletar
+    public boolean deletarVeiculo(String vei_placa) throws SQLException {
+        String sql = "DELETE FROM VEICULOS WHERE vei_placa = ?";
+        try (Connection conn = ConnectionFactory.getConnection();
+
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, vei_placa);
+
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public List<VeiculoView> consultarVeiculosViewGeral() throws SQLException {
+
+        String sql = "SELECT " +
+                "a.vei_placa, " +
+                "a.pessoa_id, " +
+                "a.vei_cor, " +
+                "a.vei_modelo, " +
+                "b.pessoa_nome AS pessoa_nome " +
+                "FROM VEICULOS a " +
+                "INNER JOIN PESSOAS b ON a.pessoa_id = b.pessoa_id ";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            List<VeiculoView> listaVeiculoView = new ArrayList<>();
+
+            while (rs.next()) {
+                VeiculoView a = new VeiculoView();
+
+                a.setPlaca(rs.getString("vei_placa"));
+                a.setPesId(rs.getInt("pessoa_id"));
+                a.setCor(rs.getString("vei_cor"));
+                a.setModelo(rs.getString("vei_modelo"));
+                a.setPesNome(rs.getString("pessoa_nome"));
+
+                listaVeiculoView.add(a);
+            }
+
+            return listaVeiculoView;
+        }
+    }
+}
