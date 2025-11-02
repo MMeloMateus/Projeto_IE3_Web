@@ -22,7 +22,7 @@ public class LocalControladoService {
         LocalControladoDTO dto = new LocalControladoDTO();
 
         dto.setNome(localControlado.getNome());
-        dto.setDescricao(localControlado.getNome());
+        dto.setDescricao(localControlado.getDescricao());
 
         return dto;
     }

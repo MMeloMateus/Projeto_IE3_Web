@@ -1,7 +1,7 @@
 package com.controleDeAcesso.dao;
 
-
 import com.controleDeAcesso.model.Casa;
+import com.controleDeAcesso.view.CasaView;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -90,6 +90,71 @@ public class CasaDAO {
                     listaCasa.add(c);
                 }
                 return listaCasa;
+            }
+        }
+    }
+
+    // Consultar Views Casas
+    public CasaView consultarCasaView(int casa_id) throws SQLException {
+
+        String sql = "SELECT " +
+                "a.casa_id, " +
+                "a.casa_ender, " +
+                "b.tipo_vinculo, " +
+                "c.pessoa_nome " +
+                "FROM CASAS a " +
+                "INNER JOIN MORADOR_CASA b ON a.casa_id = b.casa_id " +
+                "INNER JOIN PESSOAS c ON b.morador_id = c.pessoa_id " +
+                "WHERE a.casa_id = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, casa_id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                if (rs.next()) {
+                    CasaView casaView = new CasaView();
+                    casaView.setId(rs.getInt("casa_id"));
+                    casaView.setEndereco(rs.getString("casa_ender"));
+                    casaView.setTipoVinculo(rs.getString("tipo_vinculo"));
+                    casaView.setNomeMorador(rs.getString("pessoa_nome"));
+                    return casaView;
+                }
+
+                return null; // não encontrou registro
+            }
+        }
+    }
+
+
+    // Consultar Views Casas
+    public List<CasaView> consultarCasasViewGeral() throws SQLException {
+
+        String sql = "SELECT " +
+                    "a.casa_ender, " +
+                    "b.tipo_vinculo, " +
+                    "c.pessoa_nome " +
+                    "FROM CASAS a " +
+                    "INNER JOIN MORADOR_CASA b ON a.casa_id = b.casa_id" +
+                    "INNER JOIN PESSOAS c ON b.morador_id = c.pessoa_id";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                List<CasaView> listaCasaView = new ArrayList<>();
+
+                // cursor mostra a linha n-1
+                while (rs.next()) {
+                    CasaView c = new CasaView();
+                    c.setEndereco(rs.getString("casa_ender"));
+                    c.setNomeMorador(rs.getString("pessoa_nome"));
+                    c.setTipoVinculo(rs.getString("tipo_vinculo"));
+                    listaCasaView.add(c);
+                }
+                return listaCasaView;
             }
         }
     }

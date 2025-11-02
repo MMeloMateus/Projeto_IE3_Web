@@ -40,7 +40,7 @@ public class PessoaDAO {
     //}
 
     protected int incluirPessoa(Pessoa pessoa) throws SQLException {
-        String sql = "INSERT INTO PESSOAS (pessoa_nome, pessoa_cpf, pessoa_email, pessoa_telef, pessoa_data_nasc, pessoa_ativa) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO PESSOAS (pessoa_nome, pessoa_cpf, pessoa_email, pessoa_telef, pessoa_data_nasc, pessoa_ativa, pessoa_tipo) VALUES (?,?,?,?,?,?,?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -52,6 +52,7 @@ public class PessoaDAO {
             stmt.setDate(5, new java.sql.Date(pessoa.getDataNasc().getTime()));
             // garante que não será inserido NULL (evita erro quando coluna não tem DEFAULT)
             stmt.setBoolean(6, true);
+            stmt.setString(7, pessoa.getTipo());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -91,6 +92,8 @@ public class PessoaDAO {
                     p.setCpf(rs.getString("pessoa_cpf"));
                     p.setEmail(rs.getString("pessoa_email"));
                     p.setTelefone(rs.getString("pessoa_telef"));
+                    p.setTipo(rs.getString("pessoa_tipo"));
+                    p.setAtiva(rs.getBoolean("pessoa_ativa"));
                     Date d = rs.getDate("pessoa_data_nasc");
                     p.setDataNasc(d);
                     listaPessoas.add(p);
@@ -120,6 +123,7 @@ public class PessoaDAO {
                     p.setCpf(rs.getString("pessoa_cpf"));
                     p.setEmail(rs.getString("pessoa_email"));
                     p.setTelefone(rs.getString("pessoa_telef"));
+                    p.setTipo(rs.getString("pessoa_tipo"));
                     Date d = rs.getDate("pessoa_data_nasc");
                     p.setDataNasc(d);
                     return p;
@@ -149,6 +153,7 @@ public class PessoaDAO {
                     p.setCpf(rs.getString("pessoa_cpf"));
                     p.setEmail(rs.getString("pessoa_email"));
                     p.setTelefone(rs.getString("pessoa_telef"));
+                    p.setTipo(rs.getString("pessoa_tipo"));
                     Date d = rs.getDate("pessoa_data_nasc");
                     p.setDataNasc(d);
                     return p;
@@ -192,6 +197,7 @@ public class PessoaDAO {
                     p.setCpf(rs.getString("pessoa_cpf"));
                     p.setEmail(rs.getString("pessoa_email"));
                     p.setTelefone(rs.getString("pessoa_telef"));
+                    p.setTipo(rs.getString("pessoa_tipo"));
                     Date d = rs.getDate("pessoa_data_nasc");
                     p.setDataNasc(d);
                     listaPessoas.add(p);
@@ -204,7 +210,7 @@ public class PessoaDAO {
     // Atualizar - Retorna boolean
     protected boolean atualizarPessoa(Pessoa pessoa) throws SQLException {
 
-        String sql = "UPDATE PESSOAS SET pessoa_nome=?, pessoa_cpf=?, pessoa_email=?, pessoa_telef=?, pessoa_data_nasc=? WHERE pessoa_id=?";
+        String sql = "UPDATE PESSOAS SET pessoa_nome=?, pessoa_cpf=?, pessoa_email=?, pessoa_telef=?, pessoa_data_nasc=?, pessoa_tipo=?  WHERE pessoa_id=?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -215,6 +221,7 @@ public class PessoaDAO {
             stmt.setString(4, pessoa.getTelefone());
             stmt.setDate(5, new java.sql.Date(pessoa.getDataNasc().getTime()));
             stmt.setInt(6, pessoa.getId());
+            stmt.setString(7, pessoa.getTipo());
 
             return stmt.executeUpdate() > 0;
         }

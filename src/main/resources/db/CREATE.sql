@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS PESSOAS(
 	pessoa_data_nasc DATE NOT NULL,
 	pessoa_telef VARCHAR(11),
 	pessoa_email VARCHAR(100),
-	pessoa_ativa TINYINT NOT NULL
+	pessoa_ativa TINYINT NOT NULL,
+	pessoa_tipo CHAR(1) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS CASAS(

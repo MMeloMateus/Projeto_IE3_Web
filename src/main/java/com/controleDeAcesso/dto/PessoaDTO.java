@@ -10,6 +10,7 @@ public class PessoaDTO {
     private String telefone;
     private String email;
     private boolean ativa;
+    private String tipo;
 
     public PessoaDTO(int id, String nome, String cpf, Date dataNasc, String telefone, String email, boolean ativa) {
         this(nome,cpf,dataNasc,telefone,email);
@@ -75,6 +76,22 @@ public class PessoaDTO {
         this.email = email;
     }
 
+    public boolean isAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(boolean ativa) {
+        this.ativa = ativa;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     @Override
     public String toString() {
         return "PessoaDTO{" +
@@ -85,6 +102,7 @@ public class PessoaDTO {
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", ativa=" + ativa +
-                '}';
+                ", tipo='" + tipo + '\'' +
+                '}'+'\n';
     }
 }

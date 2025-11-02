@@ -48,7 +48,7 @@ public class LocalControladoDTO {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
-                '}';
+                '}'+'\n';
     }
 }
 

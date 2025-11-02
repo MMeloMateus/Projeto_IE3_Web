@@ -10,6 +10,7 @@ import java.util.Date;
 public class Pessoa {
     private int id;
     private String nome;
+    private String tipo;
     private String cpf;
     private Date dataNasc;
     private String telefone;
@@ -20,6 +21,14 @@ public class Pessoa {
         this(nome,cpf,dataNasc,telefone,email);
         this.id = id;
         this.ativa = ativa;
+    }
+
+
+    public Pessoa(int id, String nome, String cpf, Date dataNasc, String telefone, String email, String tipo, boolean ativa) {
+        this(nome,cpf,dataNasc,telefone,email);
+        this.id = id;
+        this.ativa = ativa;
+        this.tipo = tipo;
     }
 
     public Pessoa(String nome, String cpf, Date dataNasc, String telefone, String email){
@@ -48,20 +57,20 @@ public class Pessoa {
         this.nome = nome;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public String getCpf() {
         return cpf;
     }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public boolean isAtiva() {
-        return ativa;
-    }
-
-    public void setAtiva(boolean ativa) {
-        this.ativa = ativa;
     }
 
     public Date getDataNasc() {
@@ -88,11 +97,20 @@ public class Pessoa {
         this.email = email;
     }
 
+    public boolean isAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(boolean ativa) {
+        this.ativa = ativa;
+    }
+
     @Override
     public String toString() {
         return "Pessoa{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
+                ", tipo='" + tipo + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", dataNasc=" + dataNasc +
                 ", telefone='" + telefone + '\'' +

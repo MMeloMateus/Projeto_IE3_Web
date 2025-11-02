@@ -4,6 +4,7 @@ import com.controleDeAcesso.dao.VeiculoDAO;
 import com.controleDeAcesso.dto.VeiculoDTO;
 import com.controleDeAcesso.model.Veiculo;
 import com.controleDeAcesso.util.TipoPessoa;
+import com.controleDeAcesso.view.VeiculoView;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -82,6 +83,15 @@ public class VeiculoService {
                     .collect(Collectors.toList());
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao consultar veiculos geral no banco de dados",e);
+        }
+    }
+
+    public List<VeiculoView>  consultarVeiculosViewGeral(){
+
+        try{
+            return veiculoDAO.consultarVeiculosViewGeral();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao consultar veiculos view geral no banco de dados",e);
         }
     }
 

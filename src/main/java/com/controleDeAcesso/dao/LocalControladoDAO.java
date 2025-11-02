@@ -114,4 +114,5 @@ public class LocalControladoDAO {
             return stmt.executeUpdate() > 0;
         }
     }
+
 }
