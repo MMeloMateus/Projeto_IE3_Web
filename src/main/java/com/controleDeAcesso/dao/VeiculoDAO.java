@@ -1,6 +1,10 @@
 package com.controleDeAcesso.dao;
 
+import com.controleDeAcesso.Views.AcessoView;
+import com.controleDeAcesso.Views.VeiculoView;
 import com.controleDeAcesso.model.Veiculo;
+import com.controleDeAcesso.util.StatusAcesso;
+import com.controleDeAcesso.util.TipoAcesso;
 import com.controleDeAcesso.util.TipoPessoa;
 
 import java.sql.*;
@@ -172,6 +176,39 @@ public class VeiculoDAO {
             stmt.setString(1, vei_placa);
 
             return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public List<VeiculoView> consultarVeiculosViewGeral() throws SQLException {
+
+        String sql = "SELECT " +
+                "a.vei_placa, " +
+                "a.pessoa_id, " +
+                "a.vei_cor, " +
+                "a.vei_modelo, " +
+                "b.pessoa_nome AS pessoa_nome " +
+                "FROM VEICULOS a " +
+                "INNER JOIN PESSOAS b ON a.pessoa_id = b.pessoa_id ";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            List<VeiculoView> listaVeiculoView = new ArrayList<>();
+
+            while (rs.next()) {
+                VeiculoView a = new VeiculoView();
+
+                a.setPlaca(rs.getString("vei_placa"));
+                a.setPesId(rs.getInt("pessoa_id"));
+                a.setCor(rs.getString("vei_cor"));
+                a.setModelo(rs.getString("vei_modelo"));
+                a.setPesNome(rs.getString("pessoa_nome"));
+
+                listaVeiculoView.add(a);
+            }
+
+            return listaVeiculoView;
         }
     }
 }

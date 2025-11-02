@@ -31,3 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
+src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/application.properties
+target/classes/com/controleDeAcesso/dao/ConnectionFactorySqlServer.class
+target/classes/com/controleDeAcesso/dao/ConnectionFactoryMySql.class
+target/classes/com/controleDeAcesso/dao/ConnectionFactorySqlServer.class
+src/main/java/com/controleDeAcesso/dao/ConnectionFactory.java
