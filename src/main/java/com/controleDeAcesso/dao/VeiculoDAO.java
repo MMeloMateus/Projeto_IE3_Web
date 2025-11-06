@@ -183,7 +183,8 @@ public class VeiculoDAO {
                 "a.pessoa_id, " +
                 "a.vei_cor, " +
                 "a.vei_modelo, " +
-                "b.pessoa_nome AS pessoa_nome " +
+                "b.pessoa_nome AS pessoa_nome, " +
+                "b.pessoa_tipo AS pessoa_tipo " +
                 "FROM VEICULOS a " +
                 "INNER JOIN PESSOAS b ON a.pessoa_id = b.pessoa_id ";
 
@@ -201,6 +202,7 @@ public class VeiculoDAO {
                 a.setCor(rs.getString("vei_cor"));
                 a.setModelo(rs.getString("vei_modelo"));
                 a.setPesNome(rs.getString("pessoa_nome"));
+                a.setTipoResponsavel(rs.getString("pessoa_tipo"));
 
                 listaVeiculoView.add(a);
             }
